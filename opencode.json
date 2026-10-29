@@ -1,0 +1,161 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agents": {
+    "title": {
+      "model": "openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
+    }
+  },
+  "providers": {
+    "ollama": {
+      "name": "Ollama",
+      "package": "@ai-sdk/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:11434/v1"
+      },
+      "models": {
+        "qwen3-coder-next:cloud": {
+          "name": "qwen3-coder-next:cloud",
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          }
+        }
+      }
+    },
+    "routerai": {
+      "name": "RouterAI",
+      "package": "@ai-sdk/openai-compatible",
+      "settings": {
+        "baseURL": "https://routerai.ru/api/v1"
+      },
+      "models": {
+        "meta/muse-spark-1.3-contributor": {
+          "name": "Muse Spark 1.3",
+          "capabilities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 943718
+          }
+        },
+        "z-ai/glm-5.3-flash": {
+          "name": "GLM 5.3 Flash",
+          "capabilities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        },
+        "z-ai/glm-5.3": {
+          "name": "GLM 5.3",
+          "capabilities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 943718
+          }
+        },
+        "anthropic/claude-haiku-5.5": {
+          "name": "Claude Haiku 5.5",
+          "capabilities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        },
+        "openai/gpt-6-luna": {
+          "name": "GPT-6 Luna",
+          "capabilities": {
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        }
+      }
+    }
+  },
+  "mcp": {
+    "timeout": {
+      "startup": 180000,
+      "catalog": 60000
+    },
+    "servers": {
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        }
+      },
+      "serena": {
+        "type": "local",
+        "command": [
+          "uvx",
+          "--from",
+          "git+https://github.com/oraios/serena",
+          "serena",
+          "start-mcp-server"
+        ]
+      },
+      "sequential-thinking": {
+        "type": "local",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "-i",
+          "mcp/sequentialthinking"
+        ]
+      },
+      "opengym": {
+        "type": "local",
+        "command": [
+          "node",
+          "/home/serge/opengym/mcp/src/index.js"
+        ],
+        "environment": {
+          "OPENGYM_DATA": "/home/serge/opengym/data",
+          "OPENGYM_UID": "ygurXGuvcyWHwpO9"
+        }
+      }
+    }
+  }
+}
